@@ -54,10 +54,12 @@ echo $SELF1 > functions/ecm.usb0/dev_addr
 mkdir -p functions/acm.gs0
 
 # Link everything and bind the USB device
+# Fist config, RNDIS function
+# Comment these two lines to make it work on MacOs
 ln -s configs/c.1 os_desc
-
 ln -s functions/rndis.usb0 configs/c.1
 
+# Second config, CDC ECM and ACM functions
 ln -s functions/ecm.usb0 configs/c.2
 ln -s functions/acm.gs0 configs/c.2
 # End functions
