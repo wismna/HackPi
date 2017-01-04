@@ -18,8 +18,7 @@ if [ "$_IP" ]; then
 fi
 
 # libcomposite configuration
-#/usr/bin/zero_usb_gadget
-/bin/sh /home/pi/poisontap/pi_startup.rndis.sh | tee /home/pi/poisontap/pi_startup.log
+/bin/sh /home/pi/poisontap/pi_startup.sh | tee /home/pi/poisontap/pi_startup.log
 
 # Clear leases
 #rm -f /var/lib/dhcp/dhcpd.leases
