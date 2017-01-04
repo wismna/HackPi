@@ -11,10 +11,6 @@ iface lo inet loopback
 
 #allow-hotplug usb0
 iface usb0 inet manual
-        #address 192.168.2.201
-        #netmask 255.255.255.0
-        #gateway 192.168.2.1
-
 #allow-hotplug usb1
 iface usb1 inet manual
 
@@ -22,7 +18,5 @@ iface br0 inet static
         bridge_ports usb0 usb1
         address 1.0.0.1
         netmask 0.0.0.0
-	#pre-up ip addr flush dev usb0
-	#pre-up ip addr flush dev usb1
 	post-up route add -net 0.0.0.0/0
 	post-up iptables -t nat -A PREROUTING -i br0 -p tcp --dport 80 -j REDIRECT --to-port 1337
