@@ -6,14 +6,18 @@ I wanted to integrate the two hacking mechanisms on a single Raspberry Pi Zero s
 
 <h2>Walkthrough</h2>
 <h3>Quick guide</h3>
-Basically, clone the poisontap project but replace the files that have the same name by mine:
+Basically, clone the poisontap project but replace the <i>pi_startup.sh</i> file by mine, and replace the following files:
 <ul>
-<li><i>pi_startup.sh</i></li>
-<li><i>dhcpd.conf</i></li>
-<li><i>interfaces</i></li>
-<li><i>rc.local</i></li>
+<li><i>config.txt</i>, located in /boot</li>
+<li><i>modules</i>, located in /etc</li>
+<li><i>rc.local</i>, located in /etc</li>
+<li><i>isc-dhcp-server</i>, located in /etc/defaults</li>
+<li><i>dhcpd.conf</i>, located in /etc/dhcp</li>
+<li><i>interfaces</i>, located in /etc/network</li>
 </ul>
-And merge the contents of <i>config.txt</i> (located in /boot), <i>modules</i> (located in /etc) and <i>isc-dhcp-server</i> (located in /etc/defaults) in your own files.
+
+Then, install the bridge-utils package:
+`sudo apt-get install bridge-utils`
 <h3>Create an ethernet gadget</h3>
 
 This was the most irritating part of all. The really simple way to do this on the Pi is to follow <a href="https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget/ethernet-gadget">this guide</a> and use <b>g_ether</b> kernel module. However, this is the old way of doing it and it would definitely not work at all on Windows. During all my test, the gadget was systematically recognized as a COM3 device. I couldn't even force newer versions of Windows (10) to use an Ethernet driver. Also, it's impossible to emulate more than one device at the same time.
