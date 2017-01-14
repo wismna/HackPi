@@ -4,5 +4,7 @@
 # at boot time, one per line. Lines beginning with "#" are ignored.
 
 dwc2
-libcomposite
+#libcomposite
+g_ether
+usbmon
 #g_ether

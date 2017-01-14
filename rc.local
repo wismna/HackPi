@@ -17,6 +17,13 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
+# Parse USB requests in dmesg
+/bin/bash /home/pi/umap/usbreq.sh | tee /home/pi/os.txt
+
+# Stop the dummy gadget and start the real one
+modprobe -r g_ether
+modprobe libcomposite
+
 # libcomposite configuration
 /bin/sh /home/pi/poisontap/pi_startup.sh | tee /home/pi/poisontap/pi_startup.log
 
