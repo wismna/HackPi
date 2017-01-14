@@ -18,6 +18,10 @@ Basically, clone the poisontap project but replace the <i>pi_startup.sh</i> file
 
 Then, install the bridge-utils package:
 `sudo apt-get install bridge-utils`
+Also, make sure that the umap folder is present in <i>/home/pi</i>.
+
+To make OS fingerprinting work, you will need to copy <i>umap/dwc2.ko</i> to <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b> and replace the existing file. For more security, make a backup of the original file before doing so.
+
 <h3>Create an ethernet gadget</h3>
 
 This was the most irritating part of all. The really simple way to do this on the Pi is to follow <a href="https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget/ethernet-gadget">this guide</a> and use <b>g_ether</b> kernel module. However, this is the old way of doing it and it would definitely not work at all on Windows. During all my test, the gadget was systematically recognized as a COM3 device. I couldn't even force newer versions of Windows (10) to use an Ethernet driver. Also, it's impossible to emulate more than one device at the same time.
@@ -45,4 +49,6 @@ After a bit of fiddling around, it worked!
 
 My gadget is now automatically recognized by Windows and Linux, without having to change anything to the configuration files. But, as there is always a but, you may have noticed that I stopped talking about Mac... and this is because since version 10.11, MacOs is no longer smart enough to load the CDC ECM configuration if it isn't the first one! I tried to work my may around it, to no avail as of now. As a change to correct this would break the Windows compatiblity, I really don't know what to do for the moment to have it working automatically on all three OSs. The only solution for the moment is to comment the two lines linking the RNDIS configuration, so it will work on Mac and Linux (but not anymore in Windows).
 
-Details can be found in the <i>pi_startup.rndis.sh</i> file.
+<h3>OS fingerprinting</h3>
+
+Details can be found in the <i>pi_startup.sh</i> file.
