@@ -1,0 +1,10 @@
+1210,1218d1209
+<         /* Prints setup requests */
+<         printk("USB DWC2 REQ %02x %02x %04x %04x %04x\n",
+<                 ctrl->bRequestType,
+<                 ctrl->bRequest,
+<                 ctrl->wValue,
+<                 ctrl->wIndex,
+<                 ctrl->wLength);
+< 
+< 
