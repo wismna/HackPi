@@ -2,7 +2,7 @@
 
 HackPi is a combination of <a href="https://samy.pl/poisontap/">Samy Kamkar's Poisontap</a> and <a href="https://zone13.io/post/Raspberry-Pi-Zero-for-credential-snagging/">Responder (original idea by Mubix)</a> on a Raspberry Pi Zero.
 
-I wanted to integrate the two hacking mechanisms on a single Raspberry Pi Zero so that they could work at the same time. I also wanted it to work automatically on Windows, Linux and Mac. However, this proved to be quite complex.
+It works automatically on Windows, Linux and MacOs without any user interaction (e.g. no manual driver installation).
 
 <h2>Installation</h2>
 
