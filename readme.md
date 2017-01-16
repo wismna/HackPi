@@ -66,6 +66,28 @@ After a bit of fiddling around, it worked!
 My gadget was now automatically recognized by Windows and Linux, without having to change anything to the configuration files. But, as there is always a but, you may have noticed that I stopped talking about Mac... and this is because since version 10.11, MacOs is no longer smart enough to load the CDC ECM configuration if it isn't the first one! I now needed a way to make the gadget recognize the host it was connected to via USB fingerprinting, so that I could better configure libcomposite.
 
 <h3>OS fingerprinting</h3>
-Coming soon...
+This is where the fun began. I had two big issues to overcome:
+<ol>
+<li>Find a way to dump, trace or sniff USB traffic on a USB controller set as a device</li>
+<li>The chicken and the egg problem: to trace USB traffic, the gadget needed to be set up, but to be set up correctly, I needed to trace USB traffic...</li>
+</ol>
 
-Details can be found in the <i>pi_startup.sh</i> file.
+The first thing to do was to find a way to dump incoming USB traffic. The obvious answer was to use the `usbmon` kernel module which allows tracing of USB data. Unfortunately, this doesn't work at all (no data is captured) when the USB controller is in device mode. But to create a USB gadget of any kind, the controller has to be set in device (or peripheral) mode. So no `usbmon`, and by way of consequence, no tcpdump, wireshark or whatever else uses `usbmon` traces. <br />
+For device mode to work on the Raspberry Pi Zero, we have to load a kernel module, `dwc2`, which enables USB OTG (dynamic switching between host and device modes). I tried setting the module to act as a host to enable `usbmon` on it, but then no gadget would work, and there would be no trace.
+After a lot of going around in circles, I decided to read the source of this module to understand how it worked. I found a function which handles the reception of USB Setup Requests, which is exactly what I was interested in. So I simply added a `printk()` function in there to output these requests in the kernel messages, which could then be seen by calling `dmesg`. <br />
+Clearly, this is not the most elegant way to do it, but I:
+<ul>
+<li>Didn't want to recompile the whole kernel just to add debugging</li>
+<li>Didn't want any other debugging messages</li>
+</ul>
+
+So, I made my change, recompiled the module, replaced the standard one with this one, and finally! I could see the USB Setup Requests in dmesg.
+
+I now had to tackle on the next issue: the messages would only be shown when the gadget was initialized. But I wanted to see those messages before initializing the gadget so that it could be set properly!
+So I got the idea: what if I loaded a "dummy" gadget at boot, let it generate USB trace data, then disable it and activate the "real" gadget? <br />
+I tried at first creating another `libcomposite` gadget, but it wouldn't work properly. I then decided to load one of the legacy modules which was replaced by `libcomposite`, `g_ether`. Even though it was a legacy module, it would still work, and as added bonuses, it required no configuration at all and was loaded very early during boot.
+I tested that, and it worked: the `g_ether`gadget was generating USB traffic in `dmesg`, which I would interpret to determine which OS the Raspberry Pi was connected to.
+
+Granted, at the time being, it is quite simple as it only allows recognizing MacOs among other OSs (which however is exactly what I needed), but it should be relatively easy to use this data to perform more precise <a href="http://ix.cs.uoregon.edu/~butler/pubs/sadfe11.pdf">USB fingerprinting</a>.
+
+<b>So, finally, after all this, I now have a Ethernet Gadget that is recognized and loaded, without any user interaction (no manual driver installation etc.) on all major OSs: Linux, MacOS and Windows!</b>
