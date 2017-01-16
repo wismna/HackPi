@@ -4,25 +4,41 @@ HackPi is a combination of <a href="https://samy.pl/poisontap/">Samy Kamkar's Po
 
 I wanted to integrate the two hacking mechanisms on a single Raspberry Pi Zero so that they could work at the same time. I also wanted it to work automatically on Windows, Linux and Mac. However, this proved to be quite complex.
 
-<h2>Walkthrough</h2>
-<h3>Quick guide</h3>
-Basically, clone the poisontap project but replace the <i>pi_startup.sh</i> file by mine, and replace the following files:
+<h2>Installation</h2>
+
+<ol>
+<li>Install the necessary software: 
 <ul>
-<li><i>config.txt</i>, located in /boot</li>
-<li><i>modules</i>, located in /etc</li>
-<li><i>rc.local</i>, located in /etc</li>
-<li><i>isc-dhcp-server</i>, located in /etc/defaults</li>
-<li><i>dhcpd.conf</i>, located in /etc/dhcp</li>
-<li><i>interfaces</i>, located in /etc/network</li>
+  <li>sudo apt-get update</li>
+  <li>sudo apt-get upgrade</li>
+  <li>sudo apt-get -y install isc-dhcp-server dsniff screen nodejs bridge-utils</li>
 </ul>
+</li>
+<li>Copy or clone <a href="https://github.com/samyk/poisontap">PoisonTap</a> into your user's home folder (usually /home/pi)</li>
+<li>In the poisontap folder, replace the <i>pi_startup.sh</i> file with mine</li>
+<li>Copy or clone <a href="https://github.com/lgandx/Responder">Responder</a> into your user's home folder (usually /home/pi)</li>
+<li>Copy or clone the umap folder from my repository into your user's home folder (usually /home/pi)</li>
+<li>(optional) Make a backup of the <i>dwc2.ko</i> file in <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b></li>
+<li>Move the <i>dwc2.ko</i> file from the /home/pi/umap folder to <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b></li>
+<li>Replace system files (optionally make a backup of your originals beforehand)
+<ul>
+  <li><i>config.txt</i>, located in /boot</li>
+  <li><i>modules</i>, located in /etc</li>
+  <li><i>rc.local</i>, located in /etc</li>
+  <li><i>isc-dhcp-server</i>, located in /etc/defaults</li>
+  <li><i>dhcpd.conf</i>, located in /etc/dhcp</li>
+  <li><i>interfaces</i>, located in /etc/network</li>
+</ul>
+</li>
+<li>Reboot the Pi, it should work!</li>
+</ol>
 
-Then, install the bridge-utils package:
-`sudo apt-get install bridge-utils`
-Also, make sure that the umap folder is present in <i>/home/pi</i>.
+For troubleshooting, you should be able to connect to your Raspberry Pi via the serial interface and investigate the problems:
 
-To make OS fingerprinting work, you will need to copy <i>umap/dwc2.ko</i> to <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b> and replace the existing file. For more security, make a backup of the original file before doing so.
+`sudo screen /dev/ttyACM0 115200`
 
-<h3>Create an ethernet gadget</h3>
+<h2>How it works</h2>
+<h3>Creating the ethernet gadget</h3>
 
 This was the most irritating part of all. The really simple way to do this on the Pi is to follow <a href="https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget/ethernet-gadget">this guide</a> and use <b>g_ether</b> kernel module. However, this is the old way of doing it and it would definitely not work at all on Windows. During all my test, the gadget was systematically recognized as a COM3 device. I couldn't even force newer versions of Windows (10) to use an Ethernet driver. Also, it's impossible to emulate more than one device at the same time.
 
@@ -44,11 +60,12 @@ And lo and behold, it worked! Windows correctly loaded the driver and the adapte
 
 I realized (thanks to the serial console) that each configfs configuration creates a new network interface (usb0, usb1 and so on). However, all the servers were listening exclusively on usb0, which was assigned to the RNDIS configuration. Linux ignored this configuration to load the CDC ECM one, where no servers (especially ISC-DHCP) were listening and no routes nor iptables rules were added.
 
-The easy solution could have to duplicate everything, but I decided to create a bridge interface, <code>br0</code>, which would be the master of all <code>usbX</code> interfaces, and make the servers listen on that interface, as well as add the routes and iptable rules.
+The easy solution would have been to duplicate everything, but I decided to create a bridge interface instead, <code>br0</code>, which would be the master of all <code>usbX</code> interfaces. Then, I would make the servers listen on that interface, as well as add the routes and iptable rules.
 After a bit of fiddling around, it worked! 
 
-My gadget is now automatically recognized by Windows and Linux, without having to change anything to the configuration files. But, as there is always a but, you may have noticed that I stopped talking about Mac... and this is because since version 10.11, MacOs is no longer smart enough to load the CDC ECM configuration if it isn't the first one! I tried to work my may around it, to no avail as of now. As a change to correct this would break the Windows compatiblity, I really don't know what to do for the moment to have it working automatically on all three OSs. The only solution for the moment is to comment the two lines linking the RNDIS configuration, so it will work on Mac and Linux (but not anymore in Windows).
+My gadget was now automatically recognized by Windows and Linux, without having to change anything to the configuration files. But, as there is always a but, you may have noticed that I stopped talking about Mac... and this is because since version 10.11, MacOs is no longer smart enough to load the CDC ECM configuration if it isn't the first one! I now needed a way to make the gadget recognize the host it was connected to via USB fingerprinting, so that I could better configure libcomposite.
 
 <h3>OS fingerprinting</h3>
+Coming soon...
 
 Details can be found in the <i>pi_startup.sh</i> file.
