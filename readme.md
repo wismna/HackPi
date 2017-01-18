@@ -22,26 +22,17 @@ It works automatically on Windows, Linux and MacOs without any user interaction 
   <br/>
   <code>git clone https://github.com/samyk/poisontap</code>
 </li>
-<li>In the poisontap folder, replace the <i>pi_startup.sh</i> file with mine
-  <br/>
-  <code>mv -f HackPi/pi_startup.sh poisontap/</code>
-</li>
 <li>Copy or clone <a href="https://github.com/lgandx/Responder">Responder</a> into your user's home folder (usually /home/pi)
   <br/>
   <code>git clone https://github.com/lgandx/Responder</code>
-</li>
-<li>Move the umap folder from my repository into your user's home folder (usually /home/pi)
-  <br/>
-  <code>mv HackPi/umap ~</code>
-</li>
 </li>
 <li>(optional) Make a backup of the <i>dwc2.ko</i> file in <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b>
   <br/>
   <code>sudo cp /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/dwc2.ko.bak</code>
 </li>
-<li>Move the <i>dwc2.ko</i> file from the /home/pi/umap folder to <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b>
+<li>Move the <i>dwc2.ko</i> file from the /home/pi/HackPi folder to <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b>
   <br/>
-  <code>sudo mv umap/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/</code>
+  <code>sudo mv HackPi/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/</code>
 </li>
 <li>Replace system files (optionally make a backup of your originals beforehand)
 <ul>
