@@ -32,33 +32,33 @@ It works automatically on Windows, Linux and MacOs without any user interaction 
 </li>
 <li>Move the <i>dwc2.ko</i> file from the /home/pi/HackPi folder to <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b>
   <br/>
-  <code>sudo mv HackPi/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/</code>
+  <code>sudo mv ~/HackPi/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/</code>
 </li>
 <li>Replace system files (optionally make a backup of your originals beforehand)
 <ul>
   <li><i>config.txt</i>, located in /boot
   <br/>
-  <code>sudo mv -f HackPi/config.txt /boot/</code>
+  <code>sudo mv -f ~/HackPi/config.txt /boot/</code>
 </li>
   <li><i>modules</i>, located in /etc
   <br/>
-  <code>sudo mv -f HackPi/modules /etc/</code>
+  <code>sudo mv -f ~/HackPi/modules /etc/</code>
 </li>
   <li><i>rc.local</i>, located in /etc
   <br/>
-  <code>sudo mv -f HackPi/rc.local /etc/</code>
+  <code>sudo mv -f ~/HackPi/rc.local /etc/</code>
 </li>
   <li><i>isc-dhcp-server</i>, located in /etc/defaults
   <br/>
-  <code>sudo mv -f HackPi/isc-dhcp-server /etc/defaults</code>
+  <code>sudo mv -f ~/HackPi/isc-dhcp-server /etc/defaults</code>
 </li>
   <li><i>dhcpd.conf</i>, located in /etc/dhcp
   <br/>
-  <code>sudo mv -f HackPi/dhcpd.conf /etc/dhcp</code>
+  <code>sudo mv -f ~/HackPi/dhcpd.conf /etc/dhcp</code>
 </li>
   <li><i>interfaces</i>, located in /etc/network
   <br/>
-  <code>sudo mv -f HackPi/interfaces /etc/network</code>
+  <code>sudo mv -f ~/HackPi/interfaces /etc/network</code>
 </li>
 </ul>
 </li>
