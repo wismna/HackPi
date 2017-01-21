@@ -4,7 +4,7 @@
 # 06 means get descriptors (bRequest), 
 # 03xx means string descriptors (wValue)
 #WLENGTHS=`cat /tmp/0.mon.out | grep "s 80 06 03" | cut -d " " -f 10`
-WLENGTHS=`dmesg | grep "USB DWC2 REQ 80 06 03" | tee /home/pi/umap/usbreq.log | cut -d "]" -f 2 | cut -d " " -f 9`
+WLENGTHS=`dmesg | grep "USB DWC2 REQ 80 06 03" | tee /home/pi/HackPi/usbreq.log | cut -d "]" -f 2 | cut -d " " -f 9`
 TOTAL=0
 COUNTER=0
 for i in $WLENGTHS; do
