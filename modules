@@ -6,5 +6,3 @@
 dwc2
 #libcomposite
 g_ether
-usbmon
-#g_ether
