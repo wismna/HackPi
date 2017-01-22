@@ -47,6 +47,8 @@ It works automatically on Windows, Linux and MacOs without any user interaction 
   <li><i>rc.local</i>, located in /etc
   <br/>
   <code>sudo mv -f ~/HackPi/rc.local /etc/</code>
+  <br />
+  <b>Make sure it is executable after moving it to /etc</b>
 </li>
   <li><i>isc-dhcp-server</i>, located in /etc/defaults
   <br/>
