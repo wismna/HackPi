@@ -28,11 +28,11 @@ It works automatically on Windows, Linux and MacOs without any user interaction 
 </li>
 <li>(optional) Make a backup of the <i>dwc2.ko</i> file in <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b>
   <br/>
-  <code>sudo cp /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/dwc2.ko.bak</code>
+  <code>sudo mv /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/dwc2.ko.bak</code>
 </li>
 <li>Move the <i>dwc2.ko</i> file from the /home/pi/HackPi folder to <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b>
   <br/>
-  <code>sudo mv ~/HackPi/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/</code>
+  <code>sudo mv -f ~/HackPi/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/</code>
 </li>
 <li>Replace system files (optionally make a backup of your originals beforehand)
 <ul>
@@ -69,7 +69,7 @@ It works automatically on Windows, Linux and MacOs without any user interaction 
 <li>Reboot the Pi, it should work!</li>
 </ol>
 
-For troubleshooting, you should be able to connect to your Raspberry Pi via the serial interface and investigate the problems:
+For troubleshooting network issues on Linux or MacOs (not Windows at this time, unfortunately), you should be able to connect to your Raspberry Pi via the serial interface and investigate the problems:
 
 `sudo screen /dev/ttyACM0 115200`
 
