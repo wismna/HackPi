@@ -45,7 +45,7 @@ then
 	if [ $port != "1337" ];
 		then
 			sudo sed -i -e 's/1337/'$port'/g' ~/HackPi/interfaces
-			sudo sed -i -e 's/1337/'$port'/g' ~/hackPi/rc.local
+			sudo sed -i -e 's/1337/'$port'/g' ~/HackPi/rc.local
 			sudo sed -i -e 's/1337/'$port'/g' ~/poisontap/pi_poisontap.js
 			sudo sed -i -e 's/1337/'$port'/g' ~/poisontap/backdoor.html
 		fi
@@ -59,6 +59,6 @@ sudo chmod +x /etc/rc.local
 sudo cp -f ~/HackPi/isc-dhcp-server /etc/default/
 sudo cp -f ~/HackPi/dhcpd.conf /etc/dhcp/
 sudo cp -f ~/HackPi/interfaces /etc/network/
-sudo cp -f ~/HackPi/dwc2.ko /lib/modules/4.4.48+/kernel/drivers/usb/dwc2/
+sudo cp -f ~/HackPi/kernelmodules/dwc2.4.4.48+.ko /lib/modules/4.4.48+/kernel/drivers/usb/dwc2/dwc2.ko
 
 printf "\nDone.\nYou can now reboot the device."
