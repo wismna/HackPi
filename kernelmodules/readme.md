@@ -13,7 +13,7 @@ If your Raspberry Pi kernel is of a different version that the prebuilt modules 
 <li>
   Patch the kernel module using the patch file from my repository: <br/>
   <code>cd ~/linux/drivers/usb/dwc2</code><br/>
-  <code>patch -i ~/HackPi/gadget.patch</code>
+  <code>patch -i ~/HackPi/kernelmodules/gadget.patch</code>
 </li>
 <li>
   Build the module: <br/>
