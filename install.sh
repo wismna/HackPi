@@ -7,6 +7,8 @@
 #	./install.sh
 #
 
+KERNEL_VERSION=$(uname -r)
+
 # Update Packages and ensure dependencies are installed
 sudo apt-get update 
 sudo apt-get upgrade -y
@@ -26,7 +28,7 @@ then
 	sudo cp /etc/rc.local ~/HackPi/backup/rc.local.bak
 	sudo cp /etc/default/isc-dhcp-server ~/HackPi/backup/isc-dhcp-server.bak
 	sudo cp /etc/network/interfaces ~/HackPi/backup/interfaces.bak
-	sudo cp /lib/modules/4.4.48+/kernel/drivers/usb/dwc2/dwc2.ko ~/HackPi/backup/dwc2.ko.bak
+	sudo cp /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko ~/HackPi/backup/dwc2.ko.bak
 fi
 
 # Server configuration
@@ -59,6 +61,6 @@ sudo chmod +x /etc/rc.local
 sudo cp -f ~/HackPi/isc-dhcp-server /etc/default/
 sudo cp -f ~/HackPi/dhcpd.conf /etc/dhcp/
 sudo cp -f ~/HackPi/interfaces /etc/network/
-sudo cp -f ~/HackPi/kernelmodules/dwc2.4.4.48+.ko /lib/modules/4.4.48+/kernel/drivers/usb/dwc2/dwc2.ko
+sudo cp -f ~/HackPi/kernelmodules/dwc2."$KERNEL_VERSION".ko /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko
 
 printf "\nDone.\nYou can now reboot the device."
