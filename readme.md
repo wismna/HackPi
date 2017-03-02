@@ -7,64 +7,16 @@ It works automatically on Windows, Linux and MacOs without any user interaction 
 <h2>Installation</h2>
 
 <ol>
-<li>Install the necessary software: 
-<ul>
-  <li><code>sudo apt-get update</code></li>
-  <li><code>sudo apt-get upgrade</code></li>
-  <li><code>sudo apt-get -y install isc-dhcp-server dsniff screen nodejs bridge-utils</code></li>
-</ul>
-</li>
-<li>Copy or clone <a href="https://github.com/wismna/HackPi">Hackpi</a> into your user's home folder (usually /home/pi):
+<li>Clone <a href="https://github.com/wismna/HackPi">Hackpi</a> into your user's home folder (usually /home/pi):
   <br/>
   <code>git clone https://github.com/wismna/HackPi</code>
 </li>
-<li>Copy or clone <a href="https://github.com/samyk/poisontap">PoisonTap</a> into your user's home folder (usually /home/pi):
+<li>Execute the installer:
   <br/>
-  <code>git clone https://github.com/samyk/poisontap</code>
-</li>
-<li>Copy or clone <a href="https://github.com/lgandx/Responder">Responder</a> into your user's home folder (usually /home/pi)
+  <code>sudo chmod +x installer.sh</code>
   <br/>
-  <code>git clone https://github.com/lgandx/Responder</code>
+  <code>./installer.sh</code>
 </li>
-<li>(optional) Make a backup of the <i>dwc2.ko</i> file in <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b>
-  <br/>
-  <code>sudo mv /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/dwc2.ko.bak</code>
-</li>
-<li>Move the <i>dwc2.ko</i> file from the /home/pi/HackPi folder to <b>/lib/modules/4.4.38+/kernel/drivers/usb/dwc2</b>
-  <br/>
-  <code>sudo mv -f ~/HackPi/dwc2.ko /lib/modules/4.4.38+/kernel/drivers/usb/dwc2/</code>
-</li>
-<li>Replace system files (optionally make a backup of your originals beforehand)
-<ul>
-  <li><i>config.txt</i>, located in /boot
-  <br/>
-  <code>sudo mv -f ~/HackPi/config.txt /boot/</code>
-</li>
-  <li><i>modules</i>, located in /etc
-  <br/>
-  <code>sudo mv -f ~/HackPi/modules /etc/</code>
-</li>
-  <li><i>rc.local</i>, located in /etc
-  <br/>
-  <code>sudo mv -f ~/HackPi/rc.local /etc/</code>
-  <br />
-  <b>Make sure it is executable after moving it to /etc</b>
-  <br />
-  <code>sudo chmod +x /etc/rc.local</code>
-</li>
-  <li><i>isc-dhcp-server</i>, located in /etc/defaults
-  <br/>
-  <code>sudo mv -f ~/HackPi/isc-dhcp-server /etc/default</code>
-</li>
-  <li><i>dhcpd.conf</i>, located in /etc/dhcp
-  <br/>
-  <code>sudo mv -f ~/HackPi/dhcpd.conf /etc/dhcp</code>
-</li>
-  <li><i>interfaces</i>, located in /etc/network
-  <br/>
-  <code>sudo mv -f ~/HackPi/interfaces /etc/network</code>
-</li>
-</ul>
 </li>
 <li>Reboot the Pi, it should work!</li>
 </ol>
