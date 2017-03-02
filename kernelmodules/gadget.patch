@@ -1,0 +1,19 @@
+*** gadget.bak	2017-03-02 15:04:37.850238559 -0500
+--- gadget.c	2017-03-02 14:45:05.883206776 -0500
+***************
+*** 1207,1212 ****
+--- 1207,1220 ----
+  		ctrl->bRequestType, ctrl->bRequest, ctrl->wValue,
+  		ctrl->wIndex, ctrl->wLength);
+  
++ 	/* Prints setup requests */
++         printk("USB DWC2 REQ %02x %02x %04x %04x %04x\n",
++                 ctrl->bRequestType,
++                 ctrl->bRequest,
++                 ctrl->wValue,
++                 ctrl->wIndex,
++                 ctrl->wLength);
++ 
+  	if (ctrl->wLength == 0) {
+  		ep0->dir_in = 1;
+  		hsotg->ep0_state = DWC2_EP0_STATUS_IN;
