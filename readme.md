@@ -54,7 +54,7 @@ It works automatically on Windows, Linux and MacOs without any user interaction 
 </li>
   <li><i>isc-dhcp-server</i>, located in /etc/defaults
   <br/>
-  <code>sudo mv -f ~/HackPi/isc-dhcp-server /etc/defaults</code>
+  <code>sudo mv -f ~/HackPi/isc-dhcp-server /etc/default</code>
 </li>
   <li><i>dhcpd.conf</i>, located in /etc/dhcp
   <br/>
