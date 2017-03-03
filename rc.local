@@ -49,6 +49,6 @@ ifconfig br0 up
 systemctl enable getty@ttyGS0.service
 
 # Start Responder
-/usr/bin/screen -dmS responder bash -c 'cd /home/pi/Responder/; python Responder.py -I br0 -f -w -r -d -F'
+/usr/bin/screen -dmS responder bash -c 'cd /home/pi/Responder/; python Responder.py -I br0 -wF'
 
 exit 0
