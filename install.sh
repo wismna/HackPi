@@ -36,7 +36,7 @@ then
 fi
 
 # Check if kernel module is there, otherwise download kernel and patch
-if [[ $KERNEL_VERSION == "4.4.38+" || $KERNEL_VERSION == "4.4.48+" ]] ; 
+if [ -f ~/HackPi/dwc2/dwc2."$KERNEL_VERSION".ko ] ;
 then
 	sudo cp -f ~/HackPi/dwc2/dwc2."$KERNEL_VERSION".ko /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko
 	$MODULE_INSTALLED=true
@@ -56,6 +56,7 @@ else
 		cd ~/linux
 		make M=drivers/usb/dwc2 CONFIG_USB_DWC2=m
 		sudo cp -f drivers/usb/dwc2/dwc2."$KERNEL_VERSION".ko /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko
+		sudo cp -f drivers/usb/dwc2/dwc2."$KERNEL_VERSION".ko ~/HackPi/dwc2/
 		$MODULE_INSTALLED=true
 	fi
 fi
