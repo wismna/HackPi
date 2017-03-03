@@ -68,7 +68,7 @@ then
 	read server
 	if [[ $server == y* ]] ;
 	then
-		printf "\nIP address of server which is running the backend_server.js: "
+		printf "IP address of server which is running the backend_server.js: "
 		read ip
 		sudo sed -i -e 's/YOUR.DOMAIN/'$ip'/g' ~/poisontap/target_backdoor.js
 		sudo sed -i -e 's/YOUR.DOMAIN/'$ip'/g' ~/poisontap/backdoor.html
@@ -92,7 +92,7 @@ then
 	sudo cp -f ~/HackPi/isc-dhcp-server /etc/default/
 	sudo cp -f ~/HackPi/dhcpd.conf /etc/dhcp/
 	sudo cp -f ~/HackPi/interfaces /etc/network/
-	printf "\nDone.\nYou can now reboot the device."
+	printf "\nDone.\nYou can now reboot the device.\n"
 else
 	printf "Installation aborted.\n"
 	[ -v PS1 ] && return || exit
