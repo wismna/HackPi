@@ -11,7 +11,7 @@ KERNEL_VERSION=$(uname -r)
 MODULE_INSTALLED=false
 
 # Update Packages and ensure dependencies are installed
-sudo apt-get update 
+sudo apt-get update
 sudo apt-get upgrade -y
 sudo apt-get install -y isc-dhcp-server dsniff screen nodejs bridge-utils
 sudo git clone https://github.com/samyk/poisontap ~/poisontap
@@ -23,7 +23,7 @@ read backup
 
 if [[ $backup == y* ]] ;
 then
-	if [ ! -d ~/HackPi/backup ] ; 
+	if [ ! -d ~/HackPi/backup ] ;
 	then
 		sudo mkdir ~/HackPi/backup
 	fi
@@ -39,7 +39,7 @@ fi
 if [ -f ~/HackPi/dwc2/dwc2."$KERNEL_VERSION".ko ] ;
 then
 	sudo cp -f ~/HackPi/dwc2/dwc2."$KERNEL_VERSION".ko /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko
-	$MODULE_INSTALLED=true
+	MODULE_INSTALLED=true
 else
 	printf "\nModule for kernel $KERNEL_VERSION not found.\nPatching is possible, but requires downloading the kernel."
 	printf "\nProceed? [y/n] "
@@ -55,9 +55,9 @@ else
 		patch -i ~/HackPi/dwc2/gadget.patch
 		cd ~/linux
 		make M=drivers/usb/dwc2 CONFIG_USB_DWC2=m
-		sudo cp -f drivers/usb/dwc2/dwc2."$KERNEL_VERSION".ko /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko
-		sudo cp -f drivers/usb/dwc2/dwc2."$KERNEL_VERSION".ko ~/HackPi/dwc2/
-		$MODULE_INSTALLED=true
+		sudo cp -f drivers/usb/dwc2/dwc2.ko /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko
+		sudo cp -f drivers/usb/dwc2/dwc2.ko ~/HackPi/dwc2/dwc2."$KERNEL_VERSION".ko
+		MODULE_INSTALLED=true
 	fi
 fi
 
@@ -83,7 +83,7 @@ then
 			sudo sed -i -e 's/1337/'$port'/g' ~/poisontap/backdoor.html
 		fi
 	fi
-	
+
    	# Install files
 	sudo cp -f ~/HackPi/config.txt /boot/
 	sudo cp -f ~/HackPi/modules /etc/
