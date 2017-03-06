@@ -32,15 +32,12 @@ then
 	sudo cp /etc/rc.local ~/HackPi/backup/rc.local.bak
 	sudo cp /etc/default/isc-dhcp-server ~/HackPi/backup/isc-dhcp-server.bak
 	sudo cp /etc/network/interfaces ~/HackPi/backup/interfaces.bak
+	sudo cp /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko ~/HackPi/backup/dwc2.ko.bak
 fi
 
 # Check if kernel module is there, otherwise download kernel and patch
 if [ -f ~/HackPi/dwc2/dwc2."$KERNEL_VERSION".ko ] ;
 then
-	if [[ $backup == y* ]] ;
-	then
-		sudo cp /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko ~/HackPi/backup/dwc2.ko.bak
-	fi
 	sudo cp -f ~/HackPi/dwc2/dwc2."$KERNEL_VERSION".ko /lib/modules/"$KERNEL_VERSION"/kernel/drivers/usb/dwc2/dwc2.ko
 	MODULE_INSTALLED=true
 else
