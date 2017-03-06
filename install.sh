@@ -64,7 +64,7 @@ else
 	fi
 fi
 
-if [ "$MODULE_INSTALLED" == true ] ; 
+if [ "$MODULE_INSTALLED" = true ] ; 
 then
 	# Server configuration
 	printf "\nConfigure backdoor usage? [y/n] "
