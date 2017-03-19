@@ -13,9 +13,9 @@ It works automatically on Windows, Linux and MacOs without any user interaction 
 </li>
 <li>Execute the installer:
   <br/>
-  <code>sudo chmod +x installer.sh</code>
+  <code>sudo chmod +x install.sh</code>
   <br/>
-  <code>./installer.sh</code>
+  <code>./install.sh</code>
 </li>
 </li>
 <li>Reboot the Pi, it should work!</li>
