@@ -12,8 +12,8 @@ MODULE_INSTALLED=false
 
 # Update Packages and ensure dependencies are installed
 sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt-get install -y isc-dhcp-server dsniff screen nodejs bridge-utils
+sudo apt-get dist-upgrade -y
+sudo apt-get install -y isc-dhcp-server dsniff screen nodejs bridge-utils git
 sudo git clone https://github.com/samyk/poisontap ~/poisontap
 sudo git clone https://github.com/lgandx/Responder ~/Responder
 
