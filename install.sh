@@ -84,7 +84,7 @@ then
 		fi
 	fi
 
-   	# Install files
+   	# Install and setup files
 	sudo cp -f ~/HackPi/config.txt /boot/
 	sudo cp -f ~/HackPi/modules /etc/
 	sudo cp -f ~/HackPi/rc.local /etc/
@@ -92,6 +92,8 @@ then
 	sudo cp -f ~/HackPi/isc-dhcp-server /etc/default/
 	sudo cp -f ~/HackPi/dhcpd.conf /etc/dhcp/
 	sudo cp -f ~/HackPi/interfaces /etc/network/
+	sudo chmod +x ~/HackPi/gadget.sh
+	sudo chmod +x ~/HackPi/fingerprint.sh
 	printf "\nDone.\nYou can now reboot the device.\n"
 else
 	printf "Installation aborted.\n"
