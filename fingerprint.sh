@@ -6,7 +6,7 @@
 # 0409 means english (wIndex)
 # wLength is the size of the descriptor and this is what we want
 LOGFILE=/home/pi/HackPi/usbreq.log
-dmesg | grep "USB DWC2 REQ 80 06 03" | tee $LOGFILE
+dmesg | grep "USB DWC2 REQ 80 06 03" > $LOGFILE
 WLENGTHS=`awk '$9!="0000" { print $10 }' $LOGFILE`
 TOTAL=0
 COUNTER=0
